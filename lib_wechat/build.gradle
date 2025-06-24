@@ -1,0 +1,90 @@
+plugins {
+    id 'com.android.library'
+
+    id 'kotlin-android'
+    // id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+}
+
+android {
+    namespace 'net.sourceforge.simcpux'
+    compileSdk 35
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 35
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.4.0'
+
+    api 'androidx.appcompat:appcompat:1.7.0'
+    api "com.blankj:utilcodex:1.31.1"
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+apply plugin: 'maven-publish'
+
+// 全局配置
+def mGroupId = "com.yfc.lib"
+def mArtifactId = "wechat-sdk-wrapper"
+def mVersion = "1.0.0"
+
+// 发布配置
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = mGroupId
+            artifactId = mArtifactId
+            version = mVersion
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
+
+tasks.register('generateRepo', Zip) {
+    def mGroupIdFileDir = mGroupId.replace(".", "/")
+    def mGroupIdFileName = mGroupId.replace(".", "-")
+    def publishTask = tasks.named('publishReleasePublicationToMavenLocalRepository')
+    from publishTask.map {
+        it.getRepository().getUrl().toString() + mGroupIdFileDir
+    }
+    into mGroupIdFileName
+    archiveFileName.set("${mGroupIdFileName}.zip")
+}
