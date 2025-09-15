@@ -1,3 +1,4 @@
+// https://github.com/yfcyfc123234/wechat-sdk-wrapper
 plugins {
     id 'com.android.library'
 
