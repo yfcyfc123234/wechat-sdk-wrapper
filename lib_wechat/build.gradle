@@ -3,11 +3,11 @@ plugins {
 
     id 'kotlin-android'
     // id 'kotlin-kapt'
-    id 'kotlin-parcelize'
+//    id 'kotlin-parcelize'
 }
 
 android {
-    namespace 'net.sourceforge.simcpux'
+    namespace 'com.yfc.wechat'
     compileSdk 35
 
     defaultConfig {
@@ -37,7 +37,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding = false
         buildConfig = true
     }
 }
@@ -47,7 +47,7 @@ dependencies {
 
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.4.0'
 
-    api 'androidx.appcompat:appcompat:1.7.0'
+//    api 'androidx.appcompat:appcompat:1.7.0'
     api "com.blankj:utilcodex:1.31.1"
 }
 
