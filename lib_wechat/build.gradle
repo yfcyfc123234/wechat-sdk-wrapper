@@ -47,9 +47,6 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
 
     api 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:5.4.0'
-
-//    api 'androidx.appcompat:appcompat:1.7.0'
-    implementation "com.blankj:utilcodex:1.31.1"
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
